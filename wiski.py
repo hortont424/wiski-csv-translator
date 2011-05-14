@@ -2,75 +2,59 @@
 
 import csv
 import sys
-import json
 
-instruction_methods = {}
-instruction_loaders = {}
+def load_instructions():
+    from CR10X import CR10X
+    
+    return [CR10X]
 
-def instruction_method(g):
-    def wrap(cls):
-        instruction_methods[g] = cls
-        return cls
-    return wrap
-
-def instruction_loader(g):
-    def wrap(cls):
-        instruction_loaders[g] = cls
-        return cls
-    return wrap
+def apply_transforms(input_file, instruction_class):
+    input_data = list(csv.reader(input_file))
+    instructions = instruction_class()
     
-@instruction_method("select")
-def select_operation(row, context):
-    column, func = context
-    
-    if func(row[column]):
-        return row
-    
-    return None
-
-@instruction_loader("select")
-def select_loader(instruction_row):
-    return (instruction_row["column"], lambda x : x == str(instruction_row["equals"]))
-
-def load_instructions(instruction_file):
-    instructions = []
-    
-    for instruction in json.loads(instruction_file.read()):
-        method = instruction_methods[instruction["type"]]
-        args = instruction_loaders[instruction["type"]](instruction)
-        
-        instructions.append((method, args))
-    
-    return instructions
-
-def apply_transforms(input_file, instruction_file):
-    input_reader = csv.reader(input_file)
-    instructions = load_instructions(instruction_file)
-    
-    print instructions
-    
-    for row in input_reader:
-        pass
+    return instructions.process(input_data)
 
 def main():
-    if len(sys.argv) != 3:
-        print "Usage: {0} INPUT_FILENAME INSTRUCTION_FILENAME".format(sys.argv[0])
+    if len(sys.argv) != 4:
+        print "Usage: {0} INPUT_FILENAME INPUT_TYPE OUTPUT_FILENAME".format(sys.argv[0])
         return
     
-    input_filename = sys.argv[1]
-    instruction_filename = sys.argv[2]
+    _, input_filename, input_type, output_filename = sys.argv
     
     try:
         input_file = open(input_filename, "rb")
     except IOError:
         print "Could not open input file {0}!".format(input_filename)
+        return
     
     try:
-        instruction_file = open(instruction_filename, "rb")
+        output_file = open(output_filename, "w+")
     except IOError:
-        print "Could not open instruction file {0}!".format(instruction_filename)
+        print "Could not open output file {0}!".format(output_filename)
+        intput_file.close()
+        return
     
-    apply_transforms(input_file, instruction_file)
+    instruction_classes = load_instructions()
+    instruction_class = None
+    
+    for c in instruction_classes:
+        if input_type == c.__name__:
+            instruction_class = c
+    
+    if instruction_class == None:
+        print "Could not find loader for type '{0}'".format(input_type)
+        input_file.close()
+        output_file.close()
+        return
+    
+    data = apply_transforms(input_file, instruction_class)
+    
+    output_writer = csv.writer(output_file)
+    for row in data:
+        output_writer.writerow(row)
+    
+    input_file.close()
+    output_file.close()
 
 if __name__ == '__main__':
     main()

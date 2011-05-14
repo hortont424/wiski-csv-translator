@@ -1,3 +1,5 @@
 *.xls
 *.dat
 .DS_Store
+*.csv
+*.pyc
