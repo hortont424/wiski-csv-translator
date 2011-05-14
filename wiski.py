@@ -6,7 +6,8 @@ from cStringIO import StringIO
 
 def load_instructions():
     from CR10X import CR10X
-    return [CR10X]
+    from Passthrough import Passthrough
+    return [CR10X, Passthrough]
 
 def apply_transforms(input_file, instruction_class):
     input_data = list(csv.reader(input_file))
