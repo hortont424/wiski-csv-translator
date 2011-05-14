@@ -4,7 +4,7 @@ WISKI CSV Translator
 Usage
 =====
 
-./wiski.py INPUT\_FILENAME INPUT\_TYPE OUTPUT\_FILENAME
+    ./wiski.py INPUT\_FILENAME INPUT\_TYPE OUTPUT\_FILENAME
 
 INPUT\_FILENAME is a comma-separated file containing data in the
 format defined by INPUT\_TYPE, and OUTPUT\_FILENAME is the name
