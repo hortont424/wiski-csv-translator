@@ -17,4 +17,4 @@ and it's likely *not* in your $PATH.
 You ought to be able to run **wiski.py** if you're in its
 working directory with the following from cmd.exe:
 
-C:\Python27\python.exe wiski.py ARGUMENTS
+    C:\Python27\python.exe wiski.py ARGUMENTS
