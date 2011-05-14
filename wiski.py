@@ -2,6 +2,7 @@
 
 import csv
 import sys
+from cStringIO import StringIO
 
 def load_instructions():
     from CR10X import CR10X
@@ -56,11 +57,14 @@ def main():
     data = apply_transforms(input_file, instruction_class)
     
     # Write the new data to a file, as a CSV
-    output_writer = csv.writer(output_file)
+    output_string_buffer = StringIO()
+    output_writer = csv.writer(output_string_buffer)
     for row in data:
         output_writer.writerow(row)
     
     input_file.close()
+    
+    output_file.write(output_string_buffer.getvalue().replace("\r\r\n","\r\n"))
     output_file.close()
 
 if __name__ == '__main__':
