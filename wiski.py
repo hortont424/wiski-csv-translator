@@ -43,6 +43,7 @@ def main():
     
     if instruction_class == None:
         print "Could not find loader for type '{0}'".format(input_type)
+        print "Known loaders: {0}".format(", ".join([i.__name__ for i in instruction_classes]))
         input_file.close()
         output_file.close()
         return
