@@ -11,6 +11,7 @@ def load_instructions():
 
 def apply_transforms(input_file, instruction_class):
     input_data = list(csv.reader(input_file))
+    print "Read {0} rows.".format(len(input_data))
     instructions = instruction_class()
     return instructions.process(input_data)
 
@@ -62,6 +63,7 @@ def main():
     output_writer = csv.writer(output_string_buffer)
     for row in data:
         output_writer.writerow(row)
+    print "Wrote {0} rows.".format(len(data))
     
     input_file.close()
     
