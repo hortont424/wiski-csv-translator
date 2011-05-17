@@ -8,7 +8,7 @@ def convert_time(short_form):
     
     if hours == "": hours = 0
     
-    return datetime.time(int(hours), int(minutes)).strftime("%I:%M:%S %p")
+    return datetime.time(int(hours), int(minutes)).strftime("%H:%M:%S")
 
 def convert_date(day_of_year, year):
     """Convert from day-of-year and year to MM/DD/YY."""
