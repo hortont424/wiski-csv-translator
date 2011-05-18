@@ -16,6 +16,10 @@ def convert_date(day_of_year, year):
     day_delta = datetime.timedelta(int(day_of_year) - 1)
     return (year_date + day_delta).strftime("%m/%d/%y")
 
+def convert_number(num):
+    """Convert any number into floating point with six figures"""
+    return "%0.6f" % float(num)
+
 class CR10X(object):
     def __init__(self):
         super(CR10X, self).__init__()
@@ -59,8 +63,19 @@ class CR10X(object):
             
             # Emit new row, in WISKI format
             return ["DATA", "", "", "", "G9", "S14",
-                    date_string, time_string, id_num, day_of_year,
-                    batt_volt_min, air_temp_avg, rel_humid_max,
-                    rel_humid_min, avg_rad_avg, avg_par_avg,
-                    wind_spd_wvc1, wind_spd_wvc2, wind_spd_wvc3,
-                    inten_tot, snow_depth, quality]
+                    date_string,
+                    time_string,
+                    convert_number(id_num),
+                    convert_number(day_of_year),
+                    convert_number(batt_volt_min),
+                    convert_number(air_temp_avg),
+                    convert_number(rel_humid_max),
+                    convert_number(rel_humid_min),
+                    convert_number(avg_rad_avg),
+                    convert_number(avg_par_avg),
+                    convert_number(wind_spd_wvc1),
+                    convert_number(wind_spd_wvc2),
+                    convert_number(wind_spd_wvc3),
+                    convert_number(inten_tot),
+                    convert_number(snow_depth),
+                    convert_number(quality)]
