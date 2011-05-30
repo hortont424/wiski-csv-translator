@@ -29,11 +29,17 @@ class CR10X(object):
         filtered two-dimensional array of data."""
         new_data = []
 
-        # Grab the current year from the first "13" record
-        self.current_year = [row[12] for row in data if row[0] == "13"][0]
+        try:
+            # Grab the current year from the first "13" record
+
+            self.current_year = [row[12] for row in data if row and row[0] == "13" and len(row) >= 12][0]
+        except:
+            self.current_year = 0
+            pass
 
         for index, row in enumerate(data):
-            new_row = self.process_row(row, index)
+            if row:
+                new_row = self.process_row(row, index)
 
             # Only re-add the row if process_row returns *something*
             if new_row:
@@ -46,7 +52,10 @@ class CR10X(object):
         Return None if the row should be dropped in the output table."""
         # If we run into another "13" record, update the current year
         if row[0] == "13":
-            self.current_year = row[12]
+            try:
+                self.current_year = row[12]
+            except:
+                pass
             return None
 
         # If we run into a "9" record, emit a new WISKI record
