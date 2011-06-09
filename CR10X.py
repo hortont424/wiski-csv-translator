@@ -1,15 +1,5 @@
 import datetime
 
-def convert_time(short_form):
-    """Convert from CR10X to WISKI time formats.
-    For example, 359 becomes 03:59:00 AM"""
-    minutes = short_form[-2:]
-    hours = short_form[:-2]
-
-    if hours == "": hours = 0
-
-    return datetime.time(int(hours), int(minutes)).strftime("%H:%M:%S")
-
 def convert_date(day_of_year, year):
     """Convert from day-of-year and year to MM/DD/YY."""
     year_date = datetime.datetime(int(year), 1, 1)
@@ -80,14 +70,13 @@ class CR10X(object):
                 print "    Failed to parse row, throwing it away:\n    {0}".format(",".join(row))
                 return None
 
-            # Convert time and date into WISKI formats
-            time_string = convert_time(timestamp)
+            # Convert date into WISKI format
             date_string = convert_date(day_of_year, self.current_year)
 
             # Emit new row, in WISKI format
             return ["DATA", "", "", "", "G9", "S14",
                     date_string,
-                    time_string,
+                    timestamp,
                     convert_number(data["id_num"]),
                     convert_number(data["day_of_year2"]),
                     convert_number(data["batt_volt_min"]),
