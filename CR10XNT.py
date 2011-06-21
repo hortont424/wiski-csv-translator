@@ -52,6 +52,9 @@ class CR10XNT(object):
                 print "    Failed to parse row, throwing it away:\n    {0}".format(",".join(row))
                 return None
 
+            if data["site"] == "0":
+                return None
+
             # Convert date into WISKI format
             date_string = convert_date(data["day_of_year"], data["year"])
 
@@ -59,7 +62,7 @@ class CR10XNT(object):
             return ["DATA", "", "", "", "G9", "S14",
                     date_string,
                     data["time"],
-                    "0",
+                    convert_number(data["site"]),
                     convert_number(data["day_of_year"]),
                     convert_number(data["battery"]),
                     convert_number(data["air_temp"]),
