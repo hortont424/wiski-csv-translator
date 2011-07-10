@@ -52,10 +52,14 @@ class CR10XOLD(object):
             print "    Failed to parse row, throwing it away:\n    {0}".format(",".join(row))
             return None
 
-        # Convert date into WISKI format
-        dt = datetime.datetime.strptime(data["date"], "%d%b%Y")
-        date_string = dt.strftime("%m/%d/%y")
-        day_of_year = dt.strftime("%j")
+        try:
+            # Convert date into WISKI format
+            dt = datetime.datetime.strptime(data["date"], "%d%b%Y")
+            date_string = dt.strftime("%m/%d/%y")
+            day_of_year = dt.strftime("%j")
+        except:
+            print "    There's something wrong with the row's date format, throwing it away: \n    {0}".format(",".join(row))
+            return None
 
         # Emit new row, in WISKI format
         return ["DATA", "", "", "", "G9", "S14",
