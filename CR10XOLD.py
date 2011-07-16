@@ -64,7 +64,7 @@ class CR10XOLD(object):
         # Emit new row, in WISKI format
         return ["DATA", "", "", "", "G9", "S14",
                 date_string,
-                data["time"] + "00",
+                data["time"].replace(":", ""),
                 convert_number(data["site"]),
                 convert_number(day_of_year),
                 convert_number(0.0),
