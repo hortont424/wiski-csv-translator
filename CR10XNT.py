@@ -17,17 +17,13 @@ class CR10XNT(object):
     def process(self, data):
         """Given a two dimensional array of data, return a new,
         filtered two-dimensional array of data."""
-        new_data = []
-
         for index, row in enumerate(data):
             if row:
                 new_row = self.process_row(row, index)
 
             # Only re-add the row if process_row returns *something*
             if new_row:
-                new_data.append(new_row)
-
-        return new_data
+                yield new_row
 
     def process_row(self, row, index):
         """Given a single row of data, translate it into the new format.

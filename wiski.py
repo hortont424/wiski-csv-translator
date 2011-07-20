@@ -11,12 +11,6 @@ def load_instructions():
     from Passthrough import Passthrough
     return [CR10X, CR10XNT, CR10XOLD, Passthrough]
 
-def apply_transforms(input_file, instruction_class):
-    input_data = list(csv.reader(input_file))
-    print "Read {0} rows.".format(len(input_data))
-    instructions = instruction_class()
-    return instructions.process(input_data)
-
 def main():
     # Make sure the user supplies three command line arguments
     if len(sys.argv) != 4:
@@ -58,14 +52,17 @@ def main():
         return
 
     # Transorm the data!
-    data = apply_transforms(input_file, instruction_class)
+    input_data = csv.reader(input_file)
+    #print "Read {0} rows.".format(len(input_data))
+    instructions = instruction_class()
+    data = instructions.process(input_data)
 
     # Write the new data to a file, as a CSV
     output_string_buffer = StringIO()
     output_writer = csv.writer(output_string_buffer)
-    for row in data:
-        output_writer.writerow(row)
-    print "Wrote {0} rows.".format(len(data))
+    row_count = 0
+    output_writer.writerows(data)
+    #print "Wrote {0} rows.".format(row_count)
 
     input_file.close()
 

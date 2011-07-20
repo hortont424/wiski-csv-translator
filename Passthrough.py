@@ -9,15 +9,13 @@ class Passthrough(object):
 
         for row in data:
             new_row = self.process_row(row)
-            
+
             # Only re-add the row if process_row returns *something*
             if new_row:
-                new_data.append(new_row)
-            
-        return new_data
-    
+                yield new_row
+
     def process_row(self, row):
         """Given a single row of data, translate it into the new format.
         Return None if the row should be dropped in the output table."""
-        
+
         return row

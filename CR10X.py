@@ -17,8 +17,6 @@ class CR10X(object):
     def process(self, data):
         """Given a two dimensional array of data, return a new,
         filtered two-dimensional array of data."""
-        new_data = []
-
         try:
             # Grab the current year from the first "13" record
 
@@ -33,9 +31,7 @@ class CR10X(object):
 
             # Only re-add the row if process_row returns *something*
             if new_row:
-                new_data.append(new_row)
-
-        return new_data
+                yield new_row
 
     def process_row(self, row, index):
         """Given a single row of data, translate it into the new format.
