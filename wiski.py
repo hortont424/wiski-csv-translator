@@ -8,8 +8,10 @@ def load_instructions():
     from CR10X import CR10X
     from CR10XNT import CR10XNT
     from CR10XOLD import CR10XOLD
+    from CR1000_1 import CR1000_1
+    from CR1000_2 import CR1000_2
     from Passthrough import Passthrough
-    return [CR10X, CR10XNT, CR10XOLD, Passthrough]
+    return [CR10X, CR10XNT, CR10XOLD, CR1000_1, CR1000_2, Passthrough]
 
 def main():
     # Make sure the user supplies three command line arguments
