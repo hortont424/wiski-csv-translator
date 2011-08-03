@@ -74,4 +74,7 @@ class CR1000_2(object):
                 convert_number(data["wind_spd_wvc2"]),
                 convert_number("-6999"),
                 convert_number(data["inten_tot"]),
-                convert_number(data["snow_depth"])]
+                convert_number(data["snow_depth"]),
+                convert_number(data["quality"]),
+                convert_number(data["baro_in"])
+                ]
